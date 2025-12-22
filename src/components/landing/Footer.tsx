@@ -27,7 +27,6 @@ export const Footer = () => {
     <footer className="bg-gradient-to-t from-white to-primary-50 text-gray-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
-          {/* Brand Section */}
           <div className="lg:col-span-2">
             <Link href="/" className="flex items-center space-x-2 mb-4">
               <Car className="h-8 w-8 text-primary-600" />
@@ -52,8 +51,6 @@ export const Footer = () => {
               </div>
             </div>
           </div>
-
-          {/* Links Sections */}
           <div>
             <h3 className="text-gray-900 font-semibold mb-4">Platform</h3>
             <ul className="space-y-2">
