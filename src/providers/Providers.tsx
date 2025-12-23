@@ -1,28 +1,26 @@
 'use client'
 
-import { SessionProvider } from 'next-auth/react'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import { Toaster } from 'react-hot-toast'
+import { Toaster } from 'sonner'
 import { useState } from 'react'
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient())
 
   return (
-    <SessionProvider>
-      <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
         {children}
         <Toaster
           position="top-right"
+          richColors
+          theme="light"
           toastOptions={{
             duration: 4000,
             style: {
-              background: '#363636',
-              color: '#fff',
+              padding: '12px 16px',
             },
           }}
         />
       </QueryClientProvider>
-    </SessionProvider>
   )
 }

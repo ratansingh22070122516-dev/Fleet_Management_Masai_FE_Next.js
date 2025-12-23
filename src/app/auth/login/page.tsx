@@ -8,7 +8,7 @@ import { loginSchema } from '@/lib/validations'
 import { authApi } from '@/lib/api'
 import { Button } from '@/components/ui/Button'
 import { Car, Mail, Lock, AlertCircle, Eye, EyeOff } from 'lucide-react'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -61,8 +61,8 @@ export default function LoginPage() {
         {/* Logo and Header */}
         <div className="text-center">
           <Link href="/" className="inline-flex items-center space-x-2 mb-6">
-            <Car className="h-12 w-12 text-primary" />
-            <span className="text-2xl font-bold text-base-content">FleetManager</span>
+            <Car className="h-8 w-8 text-purple-300" />
+            <span className="text-2xl font-bold text-base-content">UltimteFleet</span>
           </Link>
           <h2 className="text-3xl font-bold text-base-content">
             Welcome back

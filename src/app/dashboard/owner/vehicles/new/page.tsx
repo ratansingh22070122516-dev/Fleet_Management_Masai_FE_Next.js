@@ -9,7 +9,7 @@ import { vehicleSchema } from '@/lib/validations'
 import { Button } from '@/components/ui/Button'
 import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 import { vehicleApi } from '@/lib/api'
 
 export default function NewVehiclePage() {
@@ -17,36 +17,57 @@ export default function NewVehiclePage() {
 
   const handleSubmit = async (values: any, { setSubmitting }: any) => {
     try {
-      // Note: Images will be empty for now until S3 upload is implemented
+      console.log('Form values:', values);
+      
+      // Check if user is logged in
+      const token = localStorage.getItem('token');
+      const user = localStorage.getItem('user');
+      console.log('Auth token:', token ? 'EXISTS' : 'MISSING');
+      console.log('User data:', user ? JSON.parse(user) : 'MISSING');
+      
+      if (!token) {
+        toast.error('You must be logged in to add a vehicle. Please log in again.');
+        return;
+      }
+      
+      // Enhanced payload with all required fields based on existing vehicle structure
       const payload = {
         make: values.make,
         modelName: values.model,
-        year: values.year,
+        year: parseInt(values.year), // Ensure year is a number
         color: values.color,
         licensePlate: values.licensePlate,
-        vin: values.vin,
         type: values.type,
-        capacity: {
-          passengers: values.passengers,
-          cargo: values.cargo
-        },
         pricing: {
-          baseRate: values.baseRate,
-          rateType: values.rateType
+          baseRate: parseFloat(values.baseRate), // Ensure baseRate is a number
+          rateType: values.rateType,
+          currency: 'USD' // Add currency as it seems to be required
         },
+        // Add capacity (required field based on existing vehicles)
+        capacity: {
+          passengers: 5, // Default value
+          cargo: 10 // Default value
+        },
+        // Add location (required field based on existing vehicles)  
         location: {
           type: 'Point',
-          coordinates: [0, 0],
-          address: values.street,
-          city: values.city,
-          state: values.state
+          coordinates: [0, 0], // Default coordinates
+          address: 'TBD', // To be determined
+          city: 'TBD',
+          state: 'TBD'
         },
-        features: values.features ? values.features.split(',').map((f: string) => f.trim()) : [],
-        // Don't send blob URLs - they're client-side only and can't be stored
-        images: []
+        // Add other potentially required fields based on existing data
+        features: [],
+        images: [],
+        availability: true,
+        status: 'active'
       }
 
+      console.log('Payload being sent:', payload);
+      console.log('API URL will be: http://localhost:5000/api/vehicles');
+      
       const response = await vehicleApi.create(payload)
+      console.log('API Response:', response);
       
       if (response.data.success) {
         toast.success('Vehicle added successfully!')
@@ -54,7 +75,27 @@ export default function NewVehiclePage() {
       }
     } catch (error: any) {
       console.error('Error adding vehicle:', error)
-      toast.error(error.response?.data?.message || 'Failed to add vehicle')
+      console.error('Error response:', error.response)
+      console.error('Error response data:', error.response?.data)
+      console.error('BACKEND VALIDATION ERRORS:', error.response?.data?.errors)
+      console.error('Error response status:', error.response?.status)
+      console.error('Error response headers:', error.response?.headers)
+      
+      // Show specific validation errors if available
+      if (error.response?.data?.errors && Array.isArray(error.response.data.errors)) {
+        const validationErrors = error.response.data.errors.map((err: any) => `• ${err.message || err}`).join('\n')
+        toast.error(`Validation Errors:\n${validationErrors}`)
+      } else {
+        // More specific error messages
+        const errorMessage = error.response?.data?.message || 
+                            error.response?.data?.error ||
+                            error.response?.data?.details ||
+                            (typeof error.response?.data === 'string' ? error.response.data : '') ||
+                            error.message ||
+                            'Failed to add vehicle. Please check all fields and try again.'
+        
+        toast.error(`Backend Error: ${errorMessage}`)
+      }
     } finally {
       setSubmitting(false)
     }
@@ -89,112 +130,142 @@ export default function NewVehiclePage() {
                   year: new Date().getFullYear(),
                   color: '',
                   licensePlate: '',
-                  vin: '',
                   type: 'sedan',
-                  passengers: 5,
-                  cargo: 10,
                   baseRate: 100,
                   rateType: 'daily',
-                  street: '',
-                  city: '',
-                  state: '',
-                  zipCode: '',
-                  country: 'US',
-                  features: '',
-                  description: '',
                 }}
                 validationSchema={vehicleSchema}
                 onSubmit={handleSubmit}
-              >
-                {({ isSubmitting, values }) => (
+                validate={(values) => {
+                  // Additional client-side validation feedback
+                  const errors: any = {}
+                  if (!values.make?.trim()) errors.make = 'Make is required'
+                  if (!values.model?.trim()) errors.model = 'Model is required'
+                  if (!values.color?.trim()) errors.color = 'Color is required'
+                  if (!values.licensePlate?.trim()) errors.licensePlate = 'License plate is required'
+                  if (values.baseRate <= 0) errors.baseRate = 'Base rate must be greater than 0'
+                  return errors
+                }}
+              >                
+                {({ isSubmitting, values, errors, touched }) => (
                   <Form className="space-y-6">
+                    {/* Validation Error Summary */}
+                    {Object.keys(errors).length > 0 && Object.keys(touched).length > 0 && (
+                      <div className="bg-red-50 border border-red-200 rounded-md p-4">
+                        <h4 className="text-sm font-medium text-red-800 mb-2">Please fix the following errors:</h4>
+                        <ul className="text-sm text-red-700 space-y-1">
+                          {Object.entries(errors).map(([field, error]) => (
+                            touched[field as keyof typeof touched] && (
+                              <li key={field}>• {error as string}</li>
+                            )
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                     {/* Basic Information */}
                     <div>
                       <h3 className="text-lg font-semibold text-gray-900 mb-4">Basic Information</h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                           <label htmlFor="make" className="block text-sm font-medium text-gray-700 mb-1">
-                            Make
+                            Make *
                           </label>
-                          <Field name="make" className="form-input" placeholder="Tesla" />
+                          <Field name="make">
+                            {({ field, meta }: any) => (
+                              <input
+                                {...field}
+                                className={meta.touched && meta.error ? 'form-input-error' : 'form-input'}
+                                placeholder="Tesla"
+                              />
+                            )}
+                          </Field>
                           <ErrorMessage name="make" component="div" className="form-error" />
                         </div>
 
                         <div>
                           <label htmlFor="model" className="block text-sm font-medium text-gray-700 mb-1">
-                            Model
+                            Model *
                           </label>
-                          <Field name="model" className="form-input" placeholder="Model 3" />
+                          <Field name="model">
+                            {({ field, meta }: any) => (
+                              <input
+                                {...field}
+                                className={meta.touched && meta.error ? 'form-input-error' : 'form-input'}
+                                placeholder="Model 3"
+                              />
+                            )}
+                          </Field>
                           <ErrorMessage name="model" component="div" className="form-error" />
                         </div>
 
                         <div>
                           <label htmlFor="year" className="block text-sm font-medium text-gray-700 mb-1">
-                            Year
+                            Year *
                           </label>
-                          <Field name="year" type="number" className="form-input" />
+                          <Field name="year">
+                            {({ field, meta }: any) => (
+                              <input
+                                {...field}
+                                type="number"
+                                className={meta.touched && meta.error ? 'form-input-error' : 'form-input'}
+                              />
+                            )}
+                          </Field>
                           <ErrorMessage name="year" component="div" className="form-error" />
                         </div>
 
                         <div>
                           <label htmlFor="color" className="block text-sm font-medium text-gray-700 mb-1">
-                            Color
+                            Color *
                           </label>
-                          <Field name="color" className="form-input" placeholder="Pearl White" />
+                          <Field name="color">
+                            {({ field, meta }: any) => (
+                              <input
+                                {...field}
+                                className={meta.touched && meta.error ? 'form-input-error' : 'form-input'}
+                                placeholder="Pearl White"
+                              />
+                            )}
+                          </Field>
                           <ErrorMessage name="color" component="div" className="form-error" />
                         </div>
 
                         <div>
                           <label htmlFor="type" className="block text-sm font-medium text-gray-700 mb-1">
-                            Vehicle Type
+                            Vehicle Type *
                           </label>
-                          <Field as="select" name="type" className="form-input">
-                            <option value="sedan">Sedan</option>
-                            <option value="suv">SUV</option>
-                            <option value="truck">Truck</option>
-                            <option value="van">Van</option>
-                            <option value="motorcycle">Motorcycle</option>
-                            <option value="bus">Bus</option>
+                          <Field name="type">
+                            {({ field, meta }: any) => (
+                              <select
+                                {...field}
+                                className={meta.touched && meta.error ? 'form-input-error' : 'form-input'}
+                              >
+                                <option value="sedan">Sedan</option>
+                                <option value="suv">SUV</option>
+                                <option value="truck">Truck</option>
+                                <option value="van">Van</option>
+                                <option value="motorcycle">Motorcycle</option>
+                                <option value="bus">Bus</option>
+                              </select>
+                            )}
                           </Field>
                           <ErrorMessage name="type" component="div" className="form-error" />
                         </div>
 
                         <div>
                           <label htmlFor="licensePlate" className="block text-sm font-medium text-gray-700 mb-1">
-                            License Plate
+                            License Plate *
                           </label>
-                          <Field name="licensePlate" className="form-input" placeholder="ABC-1234" />
+                          <Field name="licensePlate">
+                            {({ field, meta }: any) => (
+                              <input
+                                {...field}
+                                className={meta.touched && meta.error ? 'form-input-error' : 'form-input'}
+                                placeholder="ABC-1234"
+                              />
+                            )}
+                          </Field>
                           <ErrorMessage name="licensePlate" component="div" className="form-error" />
-                        </div>
-
-                        <div className="md:col-span-2">
-                          <label htmlFor="vin" className="block text-sm font-medium text-gray-700 mb-1">
-                            VIN (17 characters)
-                          </label>
-                          <Field name="vin" className="form-input" placeholder="1HGBH41JXMN109186" maxLength={17} />
-                          <ErrorMessage name="vin" component="div" className="form-error" />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Capacity */}
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-4">Capacity</h3>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                          <label htmlFor="passengers" className="block text-sm font-medium text-gray-700 mb-1">
-                            Passengers
-                          </label>
-                          <Field name="passengers" type="number" className="form-input" min="1" max="50" />
-                          <ErrorMessage name="passengers" component="div" className="form-error" />
-                        </div>
-
-                        <div>
-                          <label htmlFor="cargo" className="block text-sm font-medium text-gray-700 mb-1">
-                            Cargo Space (cu ft)
-                          </label>
-                          <Field name="cargo" type="number" className="form-input" min="0" />
-                          <ErrorMessage name="cargo" component="div" className="form-error" />
                         </div>
                       </div>
                     </div>
@@ -205,97 +276,39 @@ export default function NewVehiclePage() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                           <label htmlFor="baseRate" className="block text-sm font-medium text-gray-700 mb-1">
-                            Base Rate ($)
+                            Base Rate ($) *
                           </label>
-                          <Field name="baseRate" type="number" className="form-input" min="0" step="0.01" />
+                          <Field name="baseRate">
+                            {({ field, meta }: any) => (
+                              <input
+                                {...field}
+                                type="number"
+                                min="0"
+                                step="0.01"
+                                className={meta.touched && meta.error ? 'form-input-error' : 'form-input'}
+                              />
+                            )}
+                          </Field>
                           <ErrorMessage name="baseRate" component="div" className="form-error" />
                         </div>
 
                         <div>
                           <label htmlFor="rateType" className="block text-sm font-medium text-gray-700 mb-1">
-                            Rate Type
+                            Rate Type *
                           </label>
-                          <Field as="select" name="rateType" className="form-input">
-                            <option value="hourly">Hourly</option>
-                            <option value="daily">Daily</option>
+                          <Field name="rateType">
+                            {({ field, meta }: any) => (
+                              <select
+                                {...field}
+                                className={meta.touched && meta.error ? 'form-input-error' : 'form-input'}
+                              >
+                                <option value="hourly">Hourly</option>
+                                <option value="daily">Daily</option>
+                              </select>
+                            )}
                           </Field>
                           <ErrorMessage name="rateType" component="div" className="form-error" />
                         </div>
-                      </div>
-                    </div>
-
-                    {/* Location */}
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-4">Location</h3>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="md:col-span-2">
-                          <label htmlFor="street" className="block text-sm font-medium text-gray-700 mb-1">
-                            Street Address
-                          </label>
-                          <Field name="street" className="form-input" placeholder="123 Main St" />
-                          <ErrorMessage name="street" component="div" className="form-error" />
-                        </div>
-
-                        <div>
-                          <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1">
-                            City
-                          </label>
-                          <Field name="city" className="form-input" placeholder="San Francisco" />
-                          <ErrorMessage name="city" component="div" className="form-error" />
-                        </div>
-
-                        <div>
-                          <label htmlFor="state" className="block text-sm font-medium text-gray-700 mb-1">
-                            State
-                          </label>
-                          <Field name="state" className="form-input" placeholder="CA" />
-                          <ErrorMessage name="state" component="div" className="form-error" />
-                        </div>
-
-                        <div>
-                          <label htmlFor="zipCode" className="block text-sm font-medium text-gray-700 mb-1">
-                            Zip Code
-                          </label>
-                          <Field name="zipCode" className="form-input" placeholder="94102" />
-                          <ErrorMessage name="zipCode" component="div" className="form-error" />
-                        </div>
-
-                        <div>
-                          <label htmlFor="country" className="block text-sm font-medium text-gray-700 mb-1">
-                            Country
-                          </label>
-                          <Field name="country" className="form-input" />
-                          <ErrorMessage name="country" component="div" className="form-error" />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Additional Details */}
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-4">Additional Details</h3>
-                      <div>
-                        <label htmlFor="features" className="block text-sm font-medium text-gray-700 mb-1">
-                          Features (comma-separated)
-                        </label>
-                        <Field 
-                          name="features" 
-                          className="form-input" 
-                          placeholder="GPS, Bluetooth, Backup Camera, Heated Seats"
-                        />
-                        <p className="text-xs text-gray-500 mt-1">Enter features separated by commas</p>
-                      </div>
-
-                      <div className="mt-4">
-                        <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
-                          Description
-                        </label>
-                        <Field 
-                          as="textarea"
-                          name="description" 
-                          rows={4}
-                          className="form-input" 
-                          placeholder="Describe your vehicle, its condition, and any special notes..."
-                        />
                       </div>
                     </div>
 

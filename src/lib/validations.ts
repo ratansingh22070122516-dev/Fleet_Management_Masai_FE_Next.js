@@ -53,17 +53,9 @@ export const vehicleSchema = Yup.object().shape({
     .required('Year is required'),
   color: Yup.string().required('Color is required'),
   licensePlate: Yup.string().required('License plate is required'),
-  vin: Yup.string()
-    .length(17, 'VIN must be exactly 17 characters')
-    .required('VIN is required'),
   type: Yup.string()
     .oneOf(['sedan', 'suv', 'truck', 'van', 'motorcycle', 'bus'])
     .required('Vehicle type is required'),
-  passengers: Yup.number()
-    .min(1)
-    .max(50)
-    .required('Passenger capacity is required'),
-  cargo: Yup.number().min(0).required('Cargo capacity is required'),
   baseRate: Yup.number().min(0).required('Base rate is required'),
   rateType: Yup.string()
     .oneOf(['hourly', 'daily'])

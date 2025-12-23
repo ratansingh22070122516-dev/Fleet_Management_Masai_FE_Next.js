@@ -8,7 +8,7 @@ import { registerSchema } from '@/lib/validations'
 import { authApi } from '@/lib/api'
 import { Button } from '@/components/ui/Button'
 import { Car, Mail, Lock, User, Phone, MapPin, AlertCircle, CheckCircle2, Eye, EyeOff } from 'lucide-react'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 
 const roleOptions = [
   {
@@ -95,8 +95,8 @@ export default function RegisterPage() {
         {/* Logo and Header */}
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center space-x-2 mb-6">
-            <Car className="h-12 w-12 text-primary-600" />
-            <span className="text-2xl font-bold text-gray-900">FleetManager</span>
+            <Car className="h-8 w-8 text-purple-300" />
+            <span className="text-2xl font-bold text-gray-900">UltimteFleet</span>
           </Link>
           <h2 className="text-3xl font-bold text-gray-900">
             Create your account

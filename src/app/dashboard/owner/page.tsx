@@ -7,7 +7,7 @@ import { Car, DollarSign, Calendar, TrendingUp, Plus, Loader2 } from 'lucide-rea
 import { Button } from '@/components/ui/Button'
 import Link from 'next/link'
 import { vehicleApi, bookingApi } from '@/lib/api'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 
 export default function OwnerDashboard() {
   const [stats, setStats] = useState({

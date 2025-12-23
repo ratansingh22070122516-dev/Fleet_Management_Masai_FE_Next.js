@@ -37,8 +37,6 @@ export const Navbar = () => {
       }
     }
   }
-
-  // Don't render until component is mounted to avoid hydration issues
   if (!mounted) {
     return (
       <div className="navbar bg-purple-800 shadow-lg border-b border-purple-700 sticky top-0 z-50">
@@ -46,7 +44,7 @@ export const Navbar = () => {
           <div className="navbar-start">
             <Link href="/" className="btn btn-ghost text-xl hover:bg-purple-700">
               <Car className="h-8 w-8 text-purple-300" />
-              <span className="font-bold text-white">FleetManager</span>
+              <span className="font-bold text-white">UltimteFleet</span>
             </Link>
           </div>
           <div className="navbar-end">
@@ -72,8 +70,8 @@ export const Navbar = () => {
         <div className="flex items-center justify-between h-full">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 px-3 py-2 rounded-md hover:bg-purple-700 transition-colors">
-            <Car className="h-6 w-6 text-purple-300" />
-            <span className="font-bold text-white text-lg">FleetManager</span>
+            <Car className="h-8 w-8 text-purple-300" />
+            <span className="font-bold text-white text-lg">UltimteFleet</span>
           </Link>
 
           {/* Desktop Menu - Removed navigation links */}

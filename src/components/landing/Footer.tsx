@@ -29,8 +29,8 @@ export const Footer = () => {
         <div className="footer gap-12">
           <aside className="max-w-sm">
             <div className="flex items-center space-x-2 mb-6">
-              <Car className="h-8 w-8 text-primary" />
-              <span className="text-xl font-bold">FleetManager</span>
+              <Car className="h-8 w-8 text-purple-300" />
+              <span className="text-xl font-bold">UltimteFleet</span>
             </div>
             <p className="text-base-content/70 mb-6 leading-relaxed">
               The comprehensive fleet management solution that connects vehicle owners, 
@@ -95,7 +95,7 @@ export const Footer = () => {
         
         <div className="footer footer-center border-t border-base-300 pt-8 mt-12">
           <aside>
-            <p className="text-base-content/60">© 2025 FleetManager. All rights reserved.</p>
+            <p className="text-base-content/60">© 2025 UltimteFleet. All rights reserved.</p>
           </aside>
         </div>
       </div>

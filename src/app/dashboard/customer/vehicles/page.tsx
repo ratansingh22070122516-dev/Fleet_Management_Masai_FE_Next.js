@@ -7,7 +7,7 @@ import { Search, Filter, MapPin, Users, DollarSign } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import Link from 'next/link'
 import { vehicleApi } from '@/lib/api'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 
 export default function VehiclesPage() {
   const [vehicles, setVehicles] = useState<any[]>([])
@@ -157,11 +157,6 @@ export default function VehiclesPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredVehicles.map((vehicle) => (
                   <div key={vehicle._id} className="card hover:shadow-lg transition-shadow">
-                  {/* Vehicle Image Placeholder */}
-                  <div className="aspect-video bg-gradient-to-br from-gray-200 to-gray-300 rounded-lg mb-4 flex items-center justify-center">
-                    <div className="text-6xl">🚗</div>
-                  </div>
-
                   {/* Vehicle Info */}
                   <div className="mb-4">
                     <div className="flex justify-between items-start mb-2">

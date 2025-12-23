@@ -12,17 +12,13 @@ declare global {
 
 export default function FlyonuiScript() {
   useEffect(() => {
-    // Initialize FlyonUI after component mounts and scripts load
     const timer = setTimeout(() => {
       if (typeof window !== 'undefined') {
         try {
-          // Initialize FlyonUI components if available
           if (window.FlyonUI && typeof window.FlyonUI.init === 'function') {
             window.FlyonUI.init()
             console.log('FlyonUI initialized')
           }
-          
-          // Initialize HSStaticMethods if available
           if (window.HSStaticMethods && typeof window.HSStaticMethods.autoInit === 'function') {
             window.HSStaticMethods.autoInit()
             console.log('HSStaticMethods initialized')
@@ -38,7 +34,6 @@ export default function FlyonuiScript() {
 
   return (
     <>
-      {/* FlyonUI JS - Main library */}
       <Script
         src="https://cdn.jsdelivr.net/npm/flyonui@2.4.1/dist/js/flyonui.min.js"
         strategy="beforeInteractive"

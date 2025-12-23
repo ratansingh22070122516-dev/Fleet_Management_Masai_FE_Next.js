@@ -4,9 +4,9 @@ import ProtectedRoute from '@/components/auth/ProtectedRoute'
 import DashboardLayout from '@/components/layout/DashboardLayout'
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/Button'
-import { Calendar, MapPin, DollarSign, Clock, X, Loader2 } from 'lucide-react'
+import { MapPin, DollarSign, Clock, X, Loader2 } from 'lucide-react'
 import Link from 'next/link'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 import { bookingApi } from '@/lib/api'
 
 type BookingStatus = 'pending' | 'confirmed' | 'in_progress' | 'completed' | 'cancelled'
@@ -176,24 +176,26 @@ export default function CustomerBookingsPage() {
             </div>
 
             {/* Bookings List */}
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {filteredBookings.length === 0 ? (
-                <div className="card text-center py-12">
-                  <Calendar className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">
-                    {filter === 'all' ? 'No bookings found' : `No ${filter} bookings`}
-                  </h3>
-                  <p className="text-gray-600 mb-6">
-                    {filter === 'all' 
-                      ? 'Start exploring vehicles to make your first booking'
-                      : `You don't have any ${filter} bookings`
-                    }
-                  </p>
-                  {filter === 'all' && (
-                    <Link href="/dashboard/customer/vehicles">
-                      <Button>Browse Vehicles</Button>
-                    </Link>
-                  )}
+                <div className="lg:col-span-2">
+                  <div className="card text-center py-12">
+                    <img src="/images/download.png" alt="Fleet Management Logo" className="h-16 w-16 mx-auto mb-4" />
+                    <h3 className="text-lg font-medium text-gray-900 mb-2">
+                      {filter === 'all' ? 'No bookings found' : `No ${filter} bookings`}
+                    </h3>
+                    <p className="text-gray-600 mb-6">
+                      {filter === 'all' 
+                        ? 'Start exploring vehicles to make your first booking'
+                        : `You don't have any ${filter} bookings`
+                      }
+                    </p>
+                    {filter === 'all' && (
+                      <Link href="/dashboard/customer/vehicles">
+                        <Button>Browse Vehicles</Button>
+                      </Link>
+                    )}
+                  </div>
                 </div>
               ) : (
                 filteredBookings.map((booking) => (
@@ -219,7 +221,7 @@ export default function CustomerBookingsPage() {
                           {/* Pickup */}
                           <div>
                             <div className="flex items-center text-gray-600 mb-1">
-                              <Calendar className="h-4 w-4 mr-2" />
+                              <Clock className="h-4 w-4 mr-2" />
                               Pickup
                             </div>
                             <p className="font-medium text-gray-900">
@@ -234,7 +236,7 @@ export default function CustomerBookingsPage() {
                           {/* Return */}
                           <div>
                             <div className="flex items-center text-gray-600 mb-1">
-                              <Calendar className="h-4 w-4 mr-2" />
+                              <Clock className="h-4 w-4 mr-2" />
                               Return
                             </div>
                             <p className="font-medium text-gray-900">
@@ -264,11 +266,6 @@ export default function CustomerBookingsPage() {
 
                       {/* Right Side - Actions */}
                       <div className="flex lg:flex-col gap-2 lg:w-40">
-                        <Link href={`/dashboard/customer/bookings/${booking._id}`} className="flex-1">
-                          <Button variant="outline" size="sm" className="w-full">
-                            View Details
-                          </Button>
-                        </Link>
                         {canCancelBooking(booking.status) && (
                           <Button
                             variant="outline"

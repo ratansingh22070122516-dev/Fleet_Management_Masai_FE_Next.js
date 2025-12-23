@@ -3,12 +3,12 @@
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
-import { 
-  LayoutDashboard, 
-  Car, 
-  Calendar, 
-  BarChart3, 
-  Settings, 
+import {
+  LayoutDashboard,
+  Car,
+  Calendar,
+  BarChart3,
+  Settings,
   LogOut,
   Menu,
   X,
@@ -28,20 +28,16 @@ const navigationByRole = {
     { name: 'Dashboard', href: '/dashboard/owner', icon: LayoutDashboard },
     { name: 'My Vehicles', href: '/dashboard/owner/vehicles', icon: Car },
     { name: 'Bookings', href: '/dashboard/owner/bookings', icon: Calendar },
-    { name: 'Settings', href: '/dashboard/owner/settings', icon: Settings },
   ],
   driver: [
     { name: 'Dashboard', href: '/dashboard/driver', icon: LayoutDashboard },
     { name: 'My Trips', href: '/dashboard/driver/trips', icon: Calendar },
     { name: 'Vehicles', href: '/dashboard/driver/vehicles', icon: Car },
-    { name: 'Settings', href: '/dashboard/driver/settings', icon: Settings },
   ],
   customer: [
     { name: 'Dashboard', href: '/dashboard/customer', icon: LayoutDashboard },
     { name: 'Browse Vehicles', href: '/dashboard/customer/vehicles', icon: Car },
     { name: 'My Bookings', href: '/dashboard/customer/bookings', icon: Calendar },
-    { name: 'History', href: '/dashboard/customer/history', icon: BarChart3 },
-    { name: 'Settings', href: '/dashboard/customer/settings', icon: Settings },
   ],
 }
 
@@ -79,17 +75,16 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
       {/* Sidebar */}
       <aside
         id="logo-sidebar"
-        className={`fixed top-0 left-0 z-40 w-64 h-full transition-transform ${
-          isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
-        } sm:translate-x-0`}
+        className={`fixed top-0 left-0 z-40 w-64 h-full transition-transform ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+          } sm:translate-x-0`}
         aria-label="Sidebar"
       >
         <div className="h-full px-3 py-4 overflow-y-auto bg-purple-900 text-white border-r border-purple-700">
           {/* Logo */}
           <Link href="/" className="flex items-center ps-2.5 mb-5">
-            <Car className="h-6 w-6 text-purple-300" />
+            <Car className="h-8 w-8 text-purple-300" />
             <span className="self-center text-lg font-semibold whitespace-nowrap ml-3 text-white">
-              FleetManager
+              UltimteFleet
             </span>
           </Link>
 
@@ -113,21 +108,19 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
             {navigation.map((item) => {
               const Icon = item.icon
               const isActive = pathname === item.href || pathname.startsWith(item.href + '/')
-              
+
               return (
                 <li key={item.name}>
                   <Link
                     href={item.href}
-                    className={`flex items-center px-3 py-2.5 rounded-lg group transition-colors ${
-                      isActive
+                    className={`flex items-center px-3 py-2.5 rounded-lg group transition-colors ${isActive
                         ? 'bg-purple-600 text-white'
                         : 'text-purple-100 hover:bg-purple-800 hover:text-white'
-                    }`}
+                      }`}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    <Icon className={`w-5 h-5 transition duration-75 ${
-                      isActive ? 'text-white' : 'text-purple-300 group-hover:text-white'
-                    }`} />
+                    <Icon className={`w-5 h-5 transition duration-75 ${isActive ? 'text-white' : 'text-purple-300 group-hover:text-white'
+                      }`} />
                     <span className="ms-3">{item.name}</span>
                   </Link>
                 </li>
