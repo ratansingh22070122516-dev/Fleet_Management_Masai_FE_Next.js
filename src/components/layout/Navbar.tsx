@@ -1,73 +1,121 @@
 'use client'
 
-import Image from 'next/image'
-import Logo from '../../../images/download.png'
 import Link from 'next/link'
-import { useSession, signOut } from 'next-auth/react'
 import { Button } from '@/components/ui/Button'
 import { Car, Menu, X } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export const Navbar = () => {
-  const { data: session, status } = useSession()
+  const [session, setSession] = useState<any>(null)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
-  const handleSignOut = async () => {
-    await signOut({ callbackUrl: '/' })
+  useEffect(() => {
+    setMounted(true)
+    // Check for user session from localStorage only on client side
+    if (typeof window !== 'undefined') {
+      try {
+        const userStr = localStorage.getItem('user')
+        if (userStr) {
+          setSession({ user: JSON.parse(userStr) })
+        }
+      } catch (error) {
+        console.error('Error reading user session:', error)
+      }
+    }
+  }, [])
+
+  const handleSignOut = () => {
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
+        setSession(null)
+        window.location.href = '/'
+      } catch (error) {
+        console.error('Error during sign out:', error)
+      }
+    }
+  }
+
+  // Don't render until component is mounted to avoid hydration issues
+  if (!mounted) {
+    return (
+      <div className="navbar bg-purple-800 shadow-lg border-b border-purple-700 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="navbar-start">
+            <Link href="/" className="btn btn-ghost text-xl hover:bg-purple-700">
+              <Car className="h-8 w-8 text-purple-300" />
+              <span className="font-bold text-white">FleetManager</span>
+            </Link>
+          </div>
+          <div className="navbar-end">
+            <div className="hidden lg:flex items-center gap-2">
+              <div className="flex items-center gap-2">
+                <Link href="/auth/login">
+                  <Button variant="ghost" className="text-white hover:bg-purple-700">Sign In</Button>
+                </Link>
+                <Link href="/auth/register">
+                  <Button className="bg-purple-600 hover:bg-purple-700 text-white border-purple-600 hover:border-purple-700">Get Started</Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
-    <div className="navbar bg-base-100 shadow-sm border-b sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="navbar-start">
+    <div className="bg-purple-800 shadow-lg border-b border-purple-700 sticky top-0 z-50 h-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full h-full">
+        <div className="flex items-center justify-between h-full">
           {/* Logo */}
-          <Link href="/" className="btn btn-ghost text-xl">
-            <Image src={Logo} alt="Fleet logo" width={32} height={32} className="rounded" />
-            <span className="font-bold text-base-content">FleetManager</span>
+          <Link href="/" className="flex items-center space-x-2 px-3 py-2 rounded-md hover:bg-purple-700 transition-colors">
+            <Car className="h-6 w-6 text-purple-300" />
+            <span className="font-bold text-white text-lg">FleetManager</span>
           </Link>
-        </div>
 
-        {/* Desktop Menu - Removed navigation links */}
-        <div className="navbar-center hidden lg:flex">
-          {/* Navigation removed as requested */}
-        </div>
+          {/* Desktop Menu - Removed navigation links */}
+          <div className="hidden lg:flex">
+            {/* Navigation removed as requested */}
+          </div>
 
-        <div className="navbar-end">
           {/* Desktop Authentication */}
-          <div className="hidden lg:flex items-center gap-2">
-            {status === 'loading' ? (
-              <div className="skeleton h-8 w-20"></div>
-            ) : session ? (
-              <div className="flex items-center gap-2">
+          <div className="hidden lg:flex items-center space-x-3">
+            {session ? (
+              <div className="flex items-center space-x-3">
                 <Link href="/dashboard">
-                  <Button variant="ghost">Dashboard</Button>
+                  <Button variant="ghost" className="text-white hover:bg-purple-700 h-9 px-3 text-sm">Dashboard</Button>
                 </Link>
                 <div className="dropdown dropdown-end">
-                  <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                    <div className="w-10 rounded-full bg-primary text-primary-content flex items-center justify-center">
+                  <div tabIndex={0} role="button" className="flex items-center space-x-2 px-2 py-1 rounded-md hover:bg-purple-700 cursor-pointer transition-colors">
+                    <div className="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center">
                       <span className="text-xs font-semibold">
-                        {session.user?.name?.charAt(0)?.toUpperCase() || 'U'}
+                        {(session?.user?.firstName || session?.user?.name || 'U').charAt(0).toUpperCase()}
                       </span>
                     </div>
                   </div>
-                  <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                    <li>
-                      <span className="text-sm text-base-content/70">
-                        Welcome, {session.user?.name}
+                  <ul tabIndex={0} className="menu menu-sm dropdown-content bg-white rounded-lg z-[1] mt-2 w-48 p-2 shadow-lg border">
+                    <li className="px-3 py-2">
+                      <span className="text-sm text-gray-600 font-medium">
+                        Welcome, {session?.user?.firstName || session?.user?.name || 'User'}
                       </span>
                     </li>
-                    <li><hr /></li>
-                    <li><a onClick={handleSignOut}>Sign Out</a></li>
+                    <li><hr className="my-1" /></li>
+                    <li>
+                      <a onClick={handleSignOut} className="px-3 py-2 text-sm text-gray-700 hover:bg-purple-50 rounded cursor-pointer">Sign Out</a>
+                    </li>
                   </ul>
                 </div>
               </div>
             ) : (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center space-x-3">
                 <Link href="/auth/login">
-                  <Button variant="ghost">Sign In</Button>
+                  <Button variant="ghost" className="text-white hover:bg-purple-700 h-9 px-3 text-sm">Sign In</Button>
                 </Link>
                 <Link href="/auth/register">
-                  <Button variant="primary">Get Started</Button>
+                  <Button className="bg-purple-600 hover:bg-purple-700 text-white border-purple-600 hover:border-purple-700 h-9 px-4 text-sm">Get Started</Button>
                 </Link>
               </div>
             )}
@@ -76,26 +124,26 @@ export const Navbar = () => {
           {/* Mobile menu button */}
           <div className="lg:hidden">
             <div className="dropdown dropdown-end">
-              <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-                <Menu className="h-5 w-5" />
+              <div tabIndex={0} role="button" className="flex items-center justify-center w-10 h-10 rounded-md hover:bg-purple-700 cursor-pointer transition-colors">
+                <Menu className="h-5 w-5 text-white" />
               </div>
-              <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+              <ul tabIndex={0} className="menu menu-sm dropdown-content bg-white rounded-lg z-[1] mt-2 w-48 p-2 shadow-lg border">
                 {session ? (
                   <>
                     <li>
-                      <Link href="/dashboard">Dashboard</Link>
+                      <Link href="/dashboard" className="px-3 py-2 text-sm text-gray-700 hover:bg-purple-50 rounded">Dashboard</Link>
                     </li>
                     <li>
-                      <a onClick={handleSignOut}>Sign Out</a>
+                      <a onClick={handleSignOut} className="px-3 py-2 text-sm text-gray-700 hover:bg-purple-50 rounded cursor-pointer">Sign Out</a>
                     </li>
                   </>
                 ) : (
                   <>
                     <li>
-                      <Link href="/auth/login">Sign In</Link>
+                      <Link href="/auth/login" className="px-3 py-2 text-sm text-gray-700 hover:bg-purple-50 rounded">Sign In</Link>
                     </li>
                     <li>
-                      <Link href="/auth/register">Get Started</Link>
+                      <Link href="/auth/register" className="px-3 py-2 text-sm text-gray-700 hover:bg-purple-50 rounded">Get Started</Link>
                     </li>
                   </>
                 )}

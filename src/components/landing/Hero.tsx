@@ -29,11 +29,6 @@ export const Hero = () => {
                 <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
-            <Link href="/vehicles">
-              <Button variant="outline" size="lg">
-                Browse Vehicles
-              </Button>
-            </Link>
           </div>
 
           {/* Stats */}
@@ -54,15 +49,6 @@ export const Hero = () => {
               <div className="stat-title">Support</div>
               <div className="stat-value text-secondary">24/7</div>
               <div className="stat-desc">Always available</div>
-            </div>
-
-            <div className="stat">
-              <div className="stat-figure text-accent">
-                <Users className="h-8 w-8" />
-              </div>
-              <div className="stat-title">Users</div>
-              <div className="stat-value text-accent">10K+</div>
-              <div className="stat-desc">Active daily users</div>
             </div>
           </div>
         </div>
