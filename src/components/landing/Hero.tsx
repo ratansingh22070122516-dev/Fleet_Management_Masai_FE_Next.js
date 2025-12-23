@@ -12,8 +12,7 @@ export const Hero = () => {
           </div>
 
           <h1 className="text-4xl lg:text-6xl font-bold text-base-content leading-tight mb-6">
-            The Future of Fleet
-            <span className="block text-primary">Management Starts Here</span>
+            The Ultimate Fleet
           </h1>
 
           <p className="text-lg text-base-content/70 mb-8 max-w-xl">
