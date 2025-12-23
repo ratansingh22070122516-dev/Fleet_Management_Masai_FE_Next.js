@@ -1,6 +1,7 @@
 import '../styles/globals.css'
 import { Inter } from 'next/font/google'
 import { Providers } from '@/providers/Providers'
+import FlyonuiScript from '@/components/FlyonuiScript'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,6 +21,7 @@ export default function RootLayout({
         <Providers>
           {children}
         </Providers>
+        <FlyonuiScript />
       </body>
     </html>
   )

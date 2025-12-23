@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Car, Mail, Phone, MapPin } from 'lucide-react'
+import { Car, Mail, Phone, MapPin, Github, Twitter, Linkedin } from 'lucide-react'
 
 const footerLinks = {
   platform: [
@@ -24,97 +24,79 @@ const footerLinks = {
 
 export const Footer = () => {
   return (
-    <footer className="bg-gradient-to-t from-white to-primary-50 text-gray-700">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
-          <div className="lg:col-span-2">
-            <Link href="/" className="flex items-center space-x-2 mb-4">
-              <Car className="h-8 w-8 text-primary-600" />
-              <span className="text-xl font-bold text-gray-900">FleetManager</span>
-            </Link>
-            <p className="text-gray-600 mb-6 max-w-md">
+    <footer className="footer bg-base-200 text-base-content p-12 mt-16">
+      <div className="max-w-7xl mx-auto w-full">
+        <div className="footer gap-12">
+          <aside className="max-w-sm">
+            <div className="flex items-center space-x-2 mb-6">
+              <Car className="h-8 w-8 text-primary" />
+              <span className="text-xl font-bold">FleetManager</span>
+            </div>
+            <p className="text-base-content/70 mb-6 leading-relaxed">
               The comprehensive fleet management solution that connects vehicle owners, 
               drivers, and customers seamlessly.
             </p>
-            <div className="space-y-2">
-              <div className="flex items-center space-x-3">
-                <Mail className="h-4 w-4 text-primary-600" />
-                <span className="text-sm">support@fleetmanager.com</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Phone className="h-4 w-4 text-primary-600" />
-                <span className="text-sm">+1 (555) 123-4567</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <MapPin className="h-4 w-4 text-primary-600" />
-                <span className="text-sm">San Francisco, CA</span>
-              </div>
+            <div className="flex gap-4">
+              <a className="link hover:text-primary transition-colors">
+                <Github className="h-6 w-6" />
+              </a>
+              <a className="link hover:text-primary transition-colors">
+                <Twitter className="h-6 w-6" />
+              </a>
+              <a className="link hover:text-primary transition-colors">
+                <Linkedin className="h-6 w-6" />
+              </a>
             </div>
-          </div>
-          <div>
-            <h3 className="text-gray-900 font-semibold mb-4">Platform</h3>
-            <ul className="space-y-2">
-              {footerLinks.platform.map((link) => (
-                <li key={link.name}>
-                  <Link 
-                    href={link.href} 
-                    className="text-gray-600 hover:text-primary-700 transition-colors text-sm"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          </aside>
+          
+          <nav>
+            <h6 className="footer-title">Platform</h6>
+            {footerLinks.platform.map((link) => (
+              <Link key={link.name} href={link.href} className="link link-hover">
+                {link.name}
+              </Link>
+            ))}
+          </nav>
+          
+          <nav>
+            <h6 className="footer-title">Company</h6>
+            {footerLinks.company.map((link) => (
+              <Link key={link.name} href={link.href} className="link link-hover">
+                {link.name}
+              </Link>
+            ))}
+          </nav>
+          
+          <nav>
+            <h6 className="footer-title">Support</h6>
+            {footerLinks.support.map((link) => (
+              <Link key={link.name} href={link.href} className="link link-hover">
+                {link.name}
+              </Link>
+            ))}
+          </nav>
 
-          <div>
-            <h3 className="text-gray-900 font-semibold mb-4">Company</h3>
-            <ul className="space-y-2">
-              {footerLinks.company.map((link) => (
-                <li key={link.name}>
-                  <Link 
-                    href={link.href} 
-                    className="text-gray-600 hover:text-primary-700 transition-colors text-sm"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-gray-900 font-semibold mb-4">Support</h3>
-            <ul className="space-y-2">
-              {footerLinks.support.map((link) => (
-                <li key={link.name}>
-                  <Link 
-                    href={link.href} 
-                    className="text-gray-600 hover:text-primary-700 transition-colors text-sm"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <nav className="space-y-3">
+            <h6 className="footer-title text-lg">Contact Info</h6>
+            <div className="flex items-center space-x-3">
+              <Mail className="h-4 w-4 text-primary flex-shrink-0" />
+              <span className="text-sm">support@fleetmanager.com</span>
+            </div>
+            <div className="flex items-center space-x-3">
+              <Phone className="h-4 w-4 text-primary flex-shrink-0" />
+              <span className="text-sm">+1 (555) 123-4567</span>
+            </div>
+            <div className="flex items-center space-x-3">
+              <MapPin className="h-4 w-4 text-primary flex-shrink-0" />
+              <span className="text-sm">San Francisco, CA</span>
+            </div>
+          </nav>
         </div>
-
-        <div className="border-t border-primary-100 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-600 text-sm">
-            © 2025 FleetManager. All rights reserved.
-          </p>
-          <div className="flex space-x-6 mt-4 md:mt-0">
-            <Link href="/terms" className="text-gray-600 hover:text-primary-700 transition-colors text-sm">
-              Terms
-            </Link>
-            <Link href="/privacy" className="text-gray-600 hover:text-primary-700 transition-colors text-sm">
-              Privacy
-            </Link>
-            <Link href="/cookies" className="text-gray-600 hover:text-primary-700 transition-colors text-sm">
-              Cookies
-            </Link>
-          </div>
+        
+        <div className="footer footer-center border-t border-base-300 pt-8 mt-12">
+          <aside>
+            <p className="text-base-content/60">© 2025 FleetManager. All rights reserved.</p>
+          </aside>
         </div>
       </div>
     </footer>

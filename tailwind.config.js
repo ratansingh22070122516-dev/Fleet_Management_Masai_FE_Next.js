@@ -4,6 +4,8 @@ module.exports = {
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './node_modules/flyonui/flyonui.js',
+    './node_modules/flyonui/dist/**/*.js'
   ],
   theme: {
     extend: {
@@ -38,5 +40,7 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('flyonui'),
+  ],
 }

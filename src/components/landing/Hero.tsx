@@ -4,117 +4,128 @@ import { ArrowRight, Shield, Clock, Users, Star } from 'lucide-react'
 
 export const Hero = () => {
   return (
-    <section className="bg-gradient-to-br from-primary-50 to-white py-20 lg:py-32">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="lg:grid lg:grid-cols-2 lg:gap-12 items-center">
-          <div className="lg:pr-8">
-            <div className="inline-flex items-center px-3 py-1 bg-primary-100 text-primary-700 rounded-full mb-6 text-sm font-medium">
-              Trusted by 10k+ fleets
+    <section className="hero bg-gradient-to-br from-primary/10 to-base-100 min-h-screen py-12">
+      <div className="hero-content max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 grid lg:grid-cols-2 gap-16 items-center">
+        <div className="lg:pr-8">
+          <div className="badge badge-primary badge-outline mb-6">
+            Trusted by 10k+ fleets
+          </div>
+
+          <h1 className="text-4xl lg:text-6xl font-bold text-base-content leading-tight mb-6">
+            The Future of Fleet
+            <span className="block text-primary">Management Starts Here</span>
+          </h1>
+
+          <p className="text-lg text-base-content/70 mb-8 max-w-xl">
+            Connect vehicle owners, drivers, and customers on one modern platform —
+            book vehicles, manage trips, and track performance with realtime insights.
+          </p>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 mb-12">
+            <Link href="/auth/register">
+              <Button variant="primary" size="lg" className="group">
+                Get Started Free
+                <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
+            <Link href="/vehicles">
+              <Button variant="outline" size="lg">
+                Browse Vehicles
+              </Button>
+            </Link>
+          </div>
+
+          {/* Stats */}
+          <div className="stats stats-vertical lg:stats-horizontal shadow-lg border border-base-300 rounded-lg">
+            <div className="stat">
+              <div className="stat-figure text-primary">
+                <Shield className="h-8 w-8" />
+              </div>
+              <div className="stat-title">Security</div>
+              <div className="stat-value text-primary">100%</div>
+              <div className="stat-desc">Fully encrypted</div>
             </div>
 
-            <h1 className="text-4xl lg:text-5xl font-extrabold text-gray-900 leading-tight mb-6">
-              The Future of Fleet
-              <span className="block text-primary-600">Management Starts Here</span>
-            </h1>
-
-            <p className="text-lg text-gray-600 mb-8 max-w-xl">
-              Connect vehicle owners, drivers, and customers on one modern platform —
-              book vehicles, manage trips, and track performance with realtime insights.
-            </p>
-            <div className="grid grid-cols-3 gap-4 max-w-md">
-              <div className="flex items-center space-x-3">
-                <div className="p-3 bg-primary-50 rounded-lg">
-                  <Shield className="h-5 w-5 text-primary-600" />
-                </div>
-                <div>
-                  <div className="text-lg font-semibold text-gray-900">100%</div>
-                  <div className="text-xs text-gray-500">Secure</div>
-                </div>
+            <div className="stat">
+              <div className="stat-figure text-secondary">
+                <Clock className="h-8 w-8" />
               </div>
+              <div className="stat-title">Support</div>
+              <div className="stat-value text-secondary">24/7</div>
+              <div className="stat-desc">Always available</div>
+            </div>
 
-              <div className="flex items-center space-x-3">
-                <div className="p-3 bg-primary-50 rounded-lg">
-                  <Clock className="h-5 w-5 text-primary-600" />
-                </div>
-                <div>
-                  <div className="text-lg font-semibold text-gray-900">24/7</div>
-                  <div className="text-xs text-gray-500">Support</div>
-                </div>
+            <div className="stat">
+              <div className="stat-figure text-accent">
+                <Users className="h-8 w-8" />
               </div>
+              <div className="stat-title">Users</div>
+              <div className="stat-value text-accent">10K+</div>
+              <div className="stat-desc">Active daily users</div>
+            </div>
+          </div>
+        </div>
 
-              <div className="flex items-center space-x-3">
-                <div className="p-3 bg-primary-50 rounded-lg">
-                  <Users className="h-5 w-5 text-primary-600" />
-                </div>
-                <div>
-                  <div className="text-lg font-semibold text-gray-900">10K+</div>
-                  <div className="text-xs text-gray-500">Users</div>
+        <div className="mt-12 lg:mt-0">
+          <div className="mockup-window bg-base-300 border">
+            <div className="bg-base-200 flex justify-center px-4 py-16">
+              <div className="card w-full max-w-md bg-base-100 shadow-xl">
+                <div className="card-body">
+                  <div className="flex items-center justify-between mb-6">
+                    <div>
+                      <div className="text-sm opacity-60">Total Trips</div>
+                      <div className="text-2xl font-bold">127</div>
+                    </div>
+                    <div>
+                      <div className="text-sm opacity-60">Uptime</div>
+                      <div className="text-2xl font-bold">94%</div>
+                    </div>
+                    <div>
+                      <div className="text-sm opacity-60">Earnings</div>
+                      <div className="text-2xl font-bold">$12.5K</div>
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-3 gap-2 mb-6">
+                    <div className="card bg-primary/10 p-3">
+                      <div className="text-xs opacity-60">Active</div>
+                      <div className="text-lg font-semibold">54</div>
+                    </div>
+                    <div className="card bg-secondary/10 p-3">
+                      <div className="text-xs opacity-60">Idle</div>
+                      <div className="text-lg font-semibold">12</div>
+                    </div>
+                    <div className="card bg-warning/10 p-3">
+                      <div className="text-xs opacity-60">Alerts</div>
+                      <div className="text-lg font-semibold">3</div>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <div className="alert alert-success">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 stroke-current shrink-0" fill="none" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                      </svg>
+                      <span>Trip #987 completed!</span>
+                    </div>
+                    
+                    <div className="alert alert-info">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="h-6 w-6 stroke-current shrink-0">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                      </svg>
+                      <span>Booking #1024 in progress</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="mt-12 lg:mt-0">
-            <div className="relative">
-              <div className="rounded-2xl p-6 shadow-2xl" aria-hidden>
-                <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl text-white p-6 lg:p-8 w-full max-w-md lg:max-w-2xl">
-                  <div className="flex items-center justify-between mb-6">
-                    <div>
-                      <div className="text-sm text-primary-200">Total Trips</div>
-                      <div className="text-2xl font-bold">127</div>
-                    </div>
-                    <div>
-                      <div className="text-sm text-primary-200">Uptime</div>
-                      <div className="text-2xl font-bold">94%</div>
-                    </div>
-                    <div>
-                      <div className="text-sm text-primary-200">Earnings</div>
-                      <div className="text-2xl font-bold">$12.5K</div>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-                    <div className="bg-white/6 rounded-lg p-3">
-                      <div className="text-xs text-primary-200">Active</div>
-                      <div className="text-lg font-semibold">54</div>
-                    </div>
-                    <div className="bg-white/6 rounded-lg p-3">
-                      <div className="text-xs text-primary-200">Idle</div>
-                      <div className="text-lg font-semibold">12</div>
-                    </div>
-                    <div className="bg-white/6 rounded-lg p-3">
-                      <div className="text-xs text-primary-200">Alerts</div>
-                      <div className="text-lg font-semibold">3</div>
-                    </div>
-                  </div>
-                  <div className="bg-white/8 rounded-lg h-36 mb-6 p-4">
-                    <div className="h-3 bg-primary-600 rounded w-24 mb-4"></div>
-                    <div className="h-2 bg-white/30 rounded w-full mb-2"></div>
-                    <div className="h-2 bg-white/20 rounded w-5/6 mb-2"></div>
-                    <div className="h-2 bg-white/10 rounded w-4/6"></div>
-                  </div>
-                  <div className="space-y-3">
-                    {["Booking #1024", "Trip #987", "Maintenance due"].map((t, idx) => (
-                      <div key={idx} className="flex items-center justify-between bg-white/6 rounded-lg p-3">
-                        <div className="flex items-center space-x-3">
-                          <div className="h-8 w-8 rounded bg-primary-600/20 flex items-center justify-center text-primary-100 text-sm">•</div>
-                          <div>
-                            <div className="text-sm font-medium">{t}</div>
-                            <div className="text-xs text-primary-200">{idx === 0 ? '2 hours ago' : idx === 1 ? 'Yesterday' : 'In 3 days'}</div>
-                          </div>
-                        </div>
-                        <div className="text-sm text-primary-200">{idx === 0 ? 'In Progress' : 'Completed'}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              <div className="absolute -top-3 -left-3 bg-white rounded-lg shadow p-2 border border-primary-100">
-                <div className="text-xs text-gray-700 flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-primary-600 block"/> Live</div>
-              </div>
 
-              <div className="absolute -bottom-3 -right-3 bg-white rounded-lg shadow p-2 border border-primary-100">
-                <div className="text-xs text-gray-700 flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-primary-600 block"/> Analytics</div>
-              </div>
-            </div>
+          {/* Floating badges */}
+          <div className="badge badge-accent absolute top-4 left-4 gap-2">
+            <div className="w-2 h-2 rounded-full bg-success animate-pulse"></div>
+            Live
           </div>
         </div>
       </div>

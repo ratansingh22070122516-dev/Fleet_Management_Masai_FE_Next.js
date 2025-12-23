@@ -99,18 +99,18 @@ export default function OwnerDashboard() {
             </div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-8">
               <div className="card">
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
-                      <Car className="h-6 w-6 text-primary-600" />
+                    <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                      <Car className="h-6 w-6 text-purple-600" />
                     </div>
                   </div>
-                  <div className="ml-5 w-0 flex-1">
+                  <div className="ml-4 flex-1 min-w-0">
                     <dl>
-                      <dt className="text-sm font-medium text-gray-500 truncate">Total Vehicles</dt>
-                      <dd className="text-2xl font-bold text-gray-900">{stats.totalVehicles}</dd>
+                      <dt className="text-sm font-medium text-gray-500 truncate mb-1">Total Vehicles</dt>
+                      <dd className="text-2xl font-bold text-gray-900 leading-tight">{stats.totalVehicles}</dd>
                     </dl>
                   </div>
                 </div>
@@ -119,14 +119,14 @@ export default function OwnerDashboard() {
               <div className="card">
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                      <Calendar className="h-6 w-6 text-green-600" />
+                    <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                      <Calendar className="h-6 w-6 text-purple-600" />
                     </div>
                   </div>
-                  <div className="ml-5 w-0 flex-1">
+                  <div className="ml-4 flex-1 min-w-0">
                     <dl>
-                      <dt className="text-sm font-medium text-gray-500 truncate">Active Bookings</dt>
-                      <dd className="text-2xl font-bold text-gray-900">{stats.activeBookings}</dd>
+                      <dt className="text-sm font-medium text-gray-500 truncate mb-1">Active Bookings</dt>
+                      <dd className="text-2xl font-bold text-gray-900 leading-tight">{stats.activeBookings}</dd>
                     </dl>
                   </div>
                 </div>
@@ -139,10 +139,10 @@ export default function OwnerDashboard() {
                       <DollarSign className="h-6 w-6 text-purple-600" />
                     </div>
                   </div>
-                  <div className="ml-5 w-0 flex-1">
+                  <div className="ml-4 flex-1 min-w-0">
                     <dl>
-                      <dt className="text-sm font-medium text-gray-500 truncate">Total Revenue</dt>
-                      <dd className="text-2xl font-bold text-gray-900">${stats.totalRevenue.toLocaleString()}</dd>
+                      <dt className="text-sm font-medium text-gray-500 truncate mb-1">Total Revenue</dt>
+                      <dd className="text-2xl font-bold text-gray-900 leading-tight">${stats.totalRevenue.toLocaleString()}</dd>
                     </dl>
                   </div>
                 </div>
@@ -151,14 +151,14 @@ export default function OwnerDashboard() {
               <div className="card">
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
-                      <TrendingUp className="h-6 w-6 text-orange-600" />
+                    <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                      <TrendingUp className="h-6 w-6 text-purple-600" />
                     </div>
                   </div>
-                  <div className="ml-5 w-0 flex-1">
+                  <div className="ml-4 flex-1 min-w-0">
                     <dl>
-                      <dt className="text-sm font-medium text-gray-500 truncate">This Month</dt>
-                      <dd className="text-2xl font-bold text-gray-900">${stats.monthlyRevenue.toLocaleString()}</dd>
+                      <dt className="text-sm font-medium text-gray-500 truncate mb-1">This Month</dt>
+                      <dd className="text-2xl font-bold text-gray-900 leading-tight">${stats.monthlyRevenue.toLocaleString()}</dd>
                     </dl>
                   </div>
                 </div>

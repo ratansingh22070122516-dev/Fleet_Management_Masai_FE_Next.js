@@ -35,38 +35,60 @@ const features = [
 
 export const Features = () => {
   return (
-    <section className="py-20 bg-primary-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+    <section className="py-24 bg-base-200">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        <div className="text-center mb-20">
+          <h2 className="text-3xl lg:text-4xl font-bold text-base-content mb-4">
             Everything you need to manage your fleet
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-base-content/70 max-w-3xl mx-auto">
             Our comprehensive platform provides all the tools and features you need 
             to efficiently manage vehicles, drivers, and customer bookings.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
           {features.map((feature, index) => {
             const Icon = feature.icon
             return (
               <div 
                 key={index} 
-                className="p-6 rounded-lg border border-transparent bg-white hover:shadow-lg transition-all duration-200"
+                className="card bg-base-100 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer hover:-translate-y-2 border border-base-300 h-full"
               >
-                <div className="w-12 h-12 bg-white ring-1 ring-primary-100 rounded-lg flex items-center justify-center mb-4">
-                  <Icon className="h-6 w-6 text-primary-600" />
+                <div className="card-body">
+                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+                    <Icon className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="card-title text-xl text-base-content">
+                    {feature.title}
+                  </h3>
+                  <p className="text-base-content/70 leading-relaxed">
+                    {feature.description}
+                  </p>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  {feature.description}
-                </p>
               </div>
             )
           })}
+        </div>
+
+        {/* Additional CTA Section */}
+        <div className="mt-20 text-center">
+          <div className="card bg-gradient-to-r from-primary to-secondary text-primary-content max-w-4xl mx-auto">
+            <div className="card-body items-center text-center">
+              <h2 className="card-title text-2xl lg:text-3xl mb-4">
+                Ready to revolutionize your fleet management?
+              </h2>
+              <p className="mb-6 text-primary-content/90 max-w-2xl">
+                Join thousands of fleet managers who are already using our platform to streamline operations and increase profitability.
+              </p>
+              <div className="card-actions justify-center">
+                <button className="btn btn-accent btn-lg">Start Free Trial</button>
+                <button className="btn btn-outline btn-lg text-primary-content border-primary-content hover:bg-primary-content hover:text-primary">
+                  Watch Demo
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

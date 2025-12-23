@@ -17,7 +17,7 @@ This guide provides step-by-step instructions to deploy the Next.js User Applica
 #### 1.1 Create Production Environment File
 ```bash
 # Create .env.production in the project root
-NEXT_PUBLIC_API_BASE_URL=https://your-ecs-backend-url.amazonaws.com
+NEXT_PUBLIC_API_BASE_URL=https://fleet-ecs-backend-url.amazonaws.com
 NEXT_PUBLIC_APP_NAME=Fleet Management User Portal
 NEXT_PUBLIC_NODE_ENV=production
 NEXT_PUBLIC_WEBSOCKET_URL=wss://your-ecs-backend-url.amazonaws.com

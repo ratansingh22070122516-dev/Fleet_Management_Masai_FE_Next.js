@@ -56,140 +56,139 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 to-white flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen bg-gradient-to-br from-primary/10 to-base-100 flex items-center justify-center py-16 px-6 sm:px-8">
+      <div className="max-w-lg w-full space-y-10">
         {/* Logo and Header */}
         <div className="text-center">
           <Link href="/" className="inline-flex items-center space-x-2 mb-6">
-            <Car className="h-12 w-12 text-primary-600" />
-            <span className="text-2xl font-bold text-gray-900">FleetManager</span>
+            <Car className="h-12 w-12 text-primary" />
+            <span className="text-2xl font-bold text-base-content">FleetManager</span>
           </Link>
-          <h2 className="text-3xl font-bold text-gray-900">
+          <h2 className="text-3xl font-bold text-base-content">
             Welcome back
           </h2>
-          <p className="mt-2 text-sm text-gray-600">
+          <p className="mt-2 text-sm text-base-content/70">
             Don't have an account?{' '}
-            <Link href="/auth/register" className="font-medium text-primary-600 hover:text-primary-500">
+            <Link href="/auth/register" className="font-medium text-primary hover:text-primary-focus">
               Sign up
             </Link>
           </p>
         </div>
 
         {/* Login Form */}
-        <div className="bg-white py-8 px-6 shadow-lg rounded-lg border border-gray-200">
-          {apiError && (
-            <div className="mb-4 bg-primary-50 border border-primary-200 rounded-md p-4 flex items-start">
-              <AlertCircle className="h-5 w-5 text-primary-600 mr-3 flex-shrink-0 mt-0.5" />
-              <p className="text-sm text-primary-800">{apiError}</p>
-            </div>
-          )}
+        <div className="card bg-base-100 shadow-xl border border-base-300">
+          <div className="card-body p-8">
+            {apiError && (
+              <div className="alert alert-error mb-6">
+                <AlertCircle className="h-5 w-5" />
+                <span>{apiError}</span>
+              </div>
+            )}
 
-          <Formik
-            initialValues={{
-              email: '',
-              password: '',
-            }}
-            validationSchema={loginSchema}
-            onSubmit={handleSubmit}
-          >
-            {({ isSubmitting }) => (
-              <Form className="space-y-6">
-                {/* Email Field */}
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                    Email Address
-                  </label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-                    <Field
-                      id="email"
-                      name="email"
-                      type="email"
-                      autoComplete="email"
-                      className="form-input pl-10"
-                      placeholder="you@example.com"
-                    />
-                  </div>
-                  <ErrorMessage name="email" component="div" className="form-error" />
-                </div>
-
-                {/* Password Field */}
-                <div>
-                  <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                    Password
-                  </label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-                    <Field name="password">
-                      {({ field }: any) => (
-                        <>
-                          <input
-                            {...field}
-                            id="password"
-                            autoComplete="current-password"
-                            type={showPassword ? 'text' : 'password'}
-                            className="form-input pl-10"
-                            placeholder="••••••••"
-                          />
-                          <button
-                            type="button"
-                            onClick={() => setShowPassword((s) => !s)}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 focus:outline-none"
-                            aria-label={showPassword ? 'Hide password' : 'Show password'}
-                          >
-                            {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                          </button>
-                        </>
-                      )}
-                    </Field>
-                  </div>
-                  <ErrorMessage name="password" component="div" className="form-error" />
-                </div>
-
-                {/* Remember Me & Forgot Password */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center">
-                    <input
-                      id="remember-me"
-                      name="remember-me"
-                      type="checkbox"
-                      className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
-                    />
-                    <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
-                      Remember me
+            <Formik
+              initialValues={{
+                email: '',
+                password: '',
+              }}
+              validationSchema={loginSchema}
+              onSubmit={handleSubmit}
+            >
+              {({ isSubmitting }) => (
+                <Form className="space-y-8">
+                  {/* Email Field */}
+                  <div className="form-control">
+                    <label htmlFor="email" className="label">
+                      <span className="label-text font-medium text-base">Email Address</span>
                     </label>
+                    <div className="relative">
+                      <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-base-content/40" />
+                      <Field
+                        id="email"
+                        name="email"
+                        type="email"
+                        autoComplete="email"
+                        className="input input-bordered input-lg w-full pl-12 text-base"
+                        placeholder="you@example.com"
+                      />
+                    </div>
+                    <ErrorMessage name="email" component="div" className="form-error mt-2" />
                   </div>
 
-                  <div className="text-sm">
-                    <Link href="/auth/forgot-password" className="font-medium text-primary-600 hover:text-primary-500">
+                  {/* Password Field */}
+                  <div className="form-control">
+                    <label htmlFor="password" className="label">
+                      <span className="label-text font-medium text-base">Password</span>
+                    </label>
+                    <div className="relative">
+                      <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-base-content/40" />
+                      <Field name="password">
+                        {({ field }: any) => (
+                          <>
+                            <input
+                              {...field}
+                              id="password"
+                              autoComplete="current-password"
+                              type={showPassword ? 'text' : 'password'}
+                              className="input input-bordered input-lg w-full pl-12 pr-12 text-base"
+                              placeholder="••••••••"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => setShowPassword((s) => !s)}
+                              className="absolute right-4 top-1/2 -translate-y-1/2 text-base-content/60 hover:text-base-content focus:outline-none"
+                              aria-label={showPassword ? 'Hide password' : 'Show password'}
+                            >
+                              {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                            </button>
+                          </>
+                        )}
+                      </Field>
+                    </div>
+                    <ErrorMessage name="password" component="div" className="form-error mt-2" />
+                  </div>
+
+                  {/* Remember Me & Forgot Password */}
+                  <div className="flex items-center justify-between py-4">
+                    <label className="label cursor-pointer gap-3">
+                      <input
+                        id="remember-me"
+                        name="remember-me"
+                        type="checkbox"
+                        className="checkbox checkbox-primary"
+                      />
+                      <span className="label-text text-base">Remember me</span>
+                    </label>
+
+                    <Link href="/auth/forgot-password" className="link link-primary text-base">
                       Forgot password?
                     </Link>
                   </div>
-                </div>
 
-                {/* Submit Button */}
-                <Button
-                  type="submit"
-                  className="w-full"
-                  size="lg"
-                  isLoading={isSubmitting}
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? 'Signing in...' : 'Sign in'}
-                </Button>
-              </Form>
-            )}
-          </Formik>
+                  {/* Submit Button */}
+                  <div className="card-actions pt-4">
+                    <Button
+                      type="submit"
+                      className="btn-primary w-full btn-lg text-base"
+                      isLoading={isSubmitting}
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? 'Signing in...' : 'Sign in'}
+                    </Button>
+                  </div>
+                </Form>
+              )}
+            </Formik>
+          </div>
         </div>
 
         {/* Footer Links */}
-        <p className="text-center text-sm text-gray-600">
+        <p className="text-center text-sm text-base-content/70">
           By signing in, you agree to our{' '}
-          <Link href="/terms" className="font-medium text-primary-600 hover:text-primary-500">
+          <Link href="/terms" className="link link-primary">
             Terms of Service
           </Link>{' '}
           and{' '}
-          <Link href="/privacy" className="font-medium text-primary-600 hover:text-primary-500">
+          <Link href="/privacy" className="link link-primary">
             Privacy Policy
           </Link>
         </p>

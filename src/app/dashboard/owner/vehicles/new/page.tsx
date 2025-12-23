@@ -7,14 +7,13 @@ import { useRouter } from 'next/navigation'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import { vehicleSchema } from '@/lib/validations'
 import { Button } from '@/components/ui/Button'
-import { ArrowLeft, Upload, X } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 import { vehicleApi } from '@/lib/api'
 
 export default function NewVehiclePage() {
   const router = useRouter()
-  const [images, setImages] = useState<string[]>([])
 
   const handleSubmit = async (values: any, { setSubmitting }: any) => {
     try {
@@ -59,19 +58,6 @@ export default function NewVehiclePage() {
     } finally {
       setSubmitting(false)
     }
-  }
-
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files
-    if (files) {
-      // Show preview only - actual upload to S3 not yet implemented
-      const newImages = Array.from(files).map(file => URL.createObjectURL(file))
-      setImages([...images, ...newImages])
-    }
-  }
-
-  const removeImage = (index: number) => {
-    setImages(images.filter((_, i) => i !== index))
   }
 
   return (
@@ -122,44 +108,6 @@ export default function NewVehiclePage() {
               >
                 {({ isSubmitting, values }) => (
                   <Form className="space-y-6">
-                    {/* Vehicle Images */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Vehicle Photos
-                      </label>
-                      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4">
-                        <p className="text-sm text-yellow-800">
-                          ⚠️ Note: Image upload to cloud storage is not yet implemented. Images are shown as preview only and won't be saved with the vehicle.
-                        </p>
-                      </div>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-                        {images.map((img, index) => (
-                          <div key={index} className="relative aspect-video bg-gray-100 rounded-lg overflow-hidden">
-                            <img src={img} alt={`Vehicle ${index + 1}`} className="w-full h-full object-cover" />
-                            <button
-                              type="button"
-                              onClick={() => removeImage(index)}
-                              className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600"
-                            >
-                              <X className="h-4 w-4" />
-                            </button>
-                          </div>
-                        ))}
-                        <label className="aspect-video border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-primary-500 hover:bg-primary-50 transition-colors">
-                          <Upload className="h-8 w-8 text-gray-400 mb-2" />
-                          <span className="text-sm text-gray-600">Upload Photo</span>
-                          <input
-                            type="file"
-                            accept="image/*"
-                            multiple
-                            className="hidden"
-                            onChange={handleImageUpload}
-                          />
-                        </label>
-                      </div>
-                      <p className="text-xs text-gray-500">Photos shown are for preview only</p>
-                    </div>
-
                     {/* Basic Information */}
                     <div>
                       <h3 className="text-lg font-semibold text-gray-900 mb-4">Basic Information</h3>

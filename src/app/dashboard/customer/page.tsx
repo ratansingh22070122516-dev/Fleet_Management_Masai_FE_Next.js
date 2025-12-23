@@ -177,59 +177,6 @@ export default function CustomerDashboard() {
                 </div>
               </div>
             )}
-
-            {/* Quick Stats and Links */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Recent Activity */}
-              <div className="card">
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900">Need Help?</h3>
-                </div>
-                <div className="space-y-3">
-                  <Link href="/dashboard/customer/vehicles">
-                    <div className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                      <p className="text-sm font-medium text-gray-900">Browse Available Vehicles</p>
-                      <p className="text-xs text-gray-500 mt-1">Find your next ride</p>
-                    </div>
-                  </Link>
-                  <Link href="/dashboard/customer/bookings">
-                    <div className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                      <p className="text-sm font-medium text-gray-900">View All Bookings</p>
-                      <p className="text-xs text-gray-500 mt-1">Manage your reservations</p>
-                    </div>
-                  </Link>
-                  <Link href="/dashboard/customer/settings">
-                    <div className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                      <p className="text-sm font-medium text-gray-900">Account Settings</p>
-                      <p className="text-xs text-gray-500 mt-1">Update your profile</p>
-                    </div>
-                  </Link>
-                </div>
-              </div>
-
-              {/* Stats Summary */}
-              <div className="card">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Your Activity</h3>
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Total Bookings</span>
-                    <span className="text-lg font-bold text-gray-900">{stats.activeBookings + stats.completedTrips}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Completed Trips</span>
-                    <span className="text-lg font-bold text-gray-900">{stats.completedTrips}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Active Bookings</span>
-                    <span className="text-lg font-bold text-gray-900">{stats.activeBookings}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Upcoming Trips</span>
-                    <span className="text-lg font-bold text-gray-900">{stats.upcomingBookings}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </DashboardLayout>
